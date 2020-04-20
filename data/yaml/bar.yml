@@ -22,7 +22,7 @@ license:
   name: Custom license
   url: https://example.com/custom_license
 
-version: 1.0
+version: "1.0"
 dateCreated: 2020-04-15
 dateModified: 2020-04-19
 datePublished: 2020-04-19

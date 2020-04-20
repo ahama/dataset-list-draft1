@@ -1,0 +1,47 @@
+
+{{ $scratch := newScratch }}
+
+{{ range $fname, $data := .Site.Data.yaml }}
+    {{ $scratch.Add "mdtext" "----\n" }}
+    {{ $scratch.Add "mdtext" (print "# " $data.name "\n") }}
+    {{ $scratch.Add "mdtext" (print "- Name: **" $data.name "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- Description: **" $data.description "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- Kaywords: **" $data.keywords "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- UsageInfo: **" $data.usageInfo "**\n") }}
+    {{ $scratch.Add "mdtext" "- Distribution\n" }}
+    {{ $scratch.Add "mdtext" (print "    - EncodingFormat: **" $data.distribution.encodingFormat "**\n") }}
+    {{ with $data.distribution.contentURL }}
+        {{ $scratch.Add "mdtext" (print "    - ContentURL: **<" . ">**\n") }}
+    {{ else }}
+        {{ $scratch.Add "mdtext" (print "    - ContentURL: \n") }}
+    {{ end }}
+    {{ $scratch.Add "mdtext" "- Creator\n" }}
+    {{ $scratch.Add "mdtext" (print "    - Name: **" $data.creator.name "**\n") }}
+    {{ with $data.creator.url }}
+        {{ $scratch.Add "mdtext" (print "    - URL: **<" . ">**\n") }}
+    {{ else }}
+        {{ $scratch.Add "mdtext" (print "    - URL: \n") }}
+    {{ end }}
+    {{ $scratch.Add "mdtext" "    - ContactPoint\n" }}
+    {{ with $data.creator.contactPoint.email }}
+        {{ $scratch.Add "mdtext" (print "        - email: **<" . ">**\n") }}
+    {{ else }}
+        {{ $scratch.Add "mdtext" (print "        - email: \n") }}
+    {{ end }}
+    {{ $scratch.Add "mdtext" "- License\n" }}
+    {{ $scratch.Add "mdtext" (print "    - Name: **" $data.license.name "**\n") }}
+    {{ with $data.license.url }}
+        {{ $scratch.Add "mdtext" (print "    - URL: **<" . ">**\n") }}
+    {{ else }}
+        {{ $scratch.Add "mdtext" (print "    - URL: \n") }}
+    {{ end }}
+    {{ $scratch.Add "mdtext" (print "- Version: **" (string $data.version) "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- DateCreated: **" $data.dateCreated "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- DateModified: **" $data.dateModified "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- DatePublished: **" $data.datePublished "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- Identifier: **" $data.identifier "**\n") }}
+    {{ $scratch.Add "mdtext" (print "- Citation: **" $data.citation "**\n") }}
+{{ end }}
+
+{{ markdownify ($scratch.Get "mdtext") | safeHTML }}
+
